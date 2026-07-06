@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LEON SETTER VISIÓN</title>
+    <meta name="theme-color" content="#0A0A0A">
+    <!-- Icono de la pestaña del navegador -->
+    <link rel="icon" type="image/svg+xml" href="icon.svg">
+    <!-- Enlaces a los estilos y la configuración -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+
+    <!-- PANTALLA DE CARGA INICIAL -->
+    <div id="splash-screen">
+        <div class="splash-content">
+            <img src="icon.svg" alt="Logo" class="splash-logo">
+            <h2 class="splash-title">LEON SETTER <span class="highlight">VISIÓN</span></h2>
+            <div class="loader-bar">
+                <div class="loader-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Encabezado de la App -->
+    <header class="app-header">
+        <div class="brand-logo">LEON SETTER <span class="highlight">VISIÓN</span></div>
+    </header>
+
+    <!-- Contenedor de Secciones -->
+    <main class="app-content">
+        
+        <!-- SECCIÓN 1: INICIO -->
+        <section id="sec-inicio" class="tab-content active">
+            <div class="welcome-banner">
+                <h2>Hola, <span id="lbl-saludo-perfil">Usuario</span></h2>
+                <p>Bienvenido de vuelta al ecosistema LEON SETTER.</p>
+            </div>
+
+            <div class="quick-grid">
+                <div class="quick-card" onclick="cambiarTab('sec-datos')">
+                    <div class="card-icon">📊</div>
+                    <div class="card-info">
+                        <h4>Métricas</h4>
+                        <p>Revisar estadísticas</p>
+                    </div>
+                </div>
+                <div class="quick-card" onclick="cambiarTab('sec-contacto')">
+                    <div class="card-icon">💬</div>
+                    <div class="card-info">
+                        <h4>Soporte</h4>
+                        <p>Enviar un mensaje</p>
+                    </div>
+                </div>
+                <div class="quick-card" onclick="cambiarTab('sec-perfil')">
+                    <div class="card-icon">👤</div>
+                    <div class="card-info">
+                        <h4>Ajustes</h4>
+                        <p>Configurar tu perfil</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 2: DATOS E INFORMACIÓN -->
+        <section id="sec-datos" class="tab-content">
+            <h2>Métricas & Análisis</h2>
+            <div class="grid-stats">
+                <div class="stat-box">
+                    <h3>Precisión</h3>
+                    <p id="val-precision" class="stat-value">94.2%</p>
+                </div>
+                <div class="stat-box">
+                    <h3>Rendimiento</h3>
+                    <p id="val-rendimiento" class="stat-value">135M</p>
+                </div>
+            </div>
+            
+            <div class="chart-container">
+                <h3>Visualización de Rendimiento</h3>
+                <canvas id="graficoVision" width="400" height="200"></canvas>
+            </div>
+
+            <div class="update-container">
+                <h3>Actualizar Valores del Gráfico</h3>
+                <div class="input-row">
+                    <div>
+                        <label>Precisión (%)</label>
+                        <input type="number" id="input-precision" value="94" min="0" max="100">
+                    </div>
+                    <div>
+                        <label>Último Dato Gráfico</label>
+                        <input type="number" id="input-grafico" value="135" min="0" max="200">
+                    </div>
+                </div>
+                <button class="btn-main" onclick="actualizarDatosAplicación()">Aplicar Cambios</button>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 3: CONTACTO O CONSULTAS -->
+        <section id="sec-contacto" class="tab-content">
+            <h2>Centro de Mensajes</h2>
+            <form class="app-form" onsubmit="event.preventDefault(); alert('¡Mensaje enviado con éxito!');">
+                <input type="text" placeholder="Tu Nombre" required>
+                <input type="email" placeholder="Correo Electrónico" required>
+                <textarea placeholder="¿En qué podemos ayudarte hoy?" rows="5" required></textarea>
+                <button type="submit" class="btn-main">Enviar Consulta</button>
+            </form>
+        </section>
+
+        <!-- SECCIÓN 4: CONFIGURACIÓN DE PERFIL -->
+        <section id="sec-perfil" class="tab-content">
+            <h2>Ajustes de Perfil</h2>
+            <div class="profile-card">
+                <div class="avatar-container">
+                    <div id="avatar-preview" class="avatar-fallback">LS</div>
+                </div>
+                <div class="app-form">
+                    <div>
+                        <label style="color: var(--texto-mutado); font-size: 0.85rem; display:block; margin-bottom:5px;">Nombre de Operador</label>
+                        <input type="text" id="input-nombre-perfil" value="Usuario">
+                    </div>
+                    <div>
+                        <label style="color: var(--texto-mutado); font-size: 0.85rem; display:block; margin-bottom:5px;">Iniciales del Avatar</label>
+                        <input type="text" id="input-iniciales-perfil" value="LS" maxlength="2">
+                    </div>
+                    <button class="btn-main" onclick="guardarPerfil()">Guardar Cambios</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Barra de Navegación Inferior -->
+    <nav class="app-nav">
+        <button class="nav-item active" onclick="activarNav(this, 'sec-inicio')">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-label">Inicio</span>
+        </button>
+        <button class="nav-item" onclick="activarNav(this, 'sec-datos')">
+            <span class="nav-icon">📊</span>
+            <span class="nav-label">Datos</span>
+        </button>
+        <button class="nav-item" onclick="activarNav(this, 'sec-contacto')">
+            <span class="nav-icon">💬</span>
+            <span class="nav-label">Mensajes</span>
+        </button>
+        <button class="nav-item" onclick="activarNav(this, 'sec-perfil')">
+            <span class="nav-icon">👤</span>
+            <span class="nav-label">Perfil</span>
+        </button>
+    </nav>
+
+    <script src="app.js"></script>
+</body>
+</html>
